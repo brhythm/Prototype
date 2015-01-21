@@ -25,24 +25,24 @@ class Solution {
         ListNode(int x) : val(x), next(NULL) {}
     };
  public:
-    ListNode *swapPairs(ListNode *headPtr) {
+    ListNode *swapPairs(ListNode *current) {
         ListNode dummyHead(0);
 
         ListNode* dummyHeadPtr = &dummyHead;
-        dummyHeadPtr->next = headPtr;
+        dummyHeadPtr->next = current;
 
         //WARNING, the trap here is
         // 2->1->4->3
         // you might forget to make 1->4
-        ListNode* prevHeadPtr = dummyHeadPtr;
-        while (headPtr != NULL && headPtr->next != NULL)
+        ListNode* head2 = dummyHeadPtr;
+        while (current != NULL && current->next != NULL)
         {
-            prevHeadPtr->next = headPtr->next;
-            headPtr->next = prevHeadPtr->next->next;
-            prevHeadPtr->next->next = headPtr;
+            head2->next = current->next;
+            current->next = head2->next->next;
+            head2->next->next = current;
 
-            prevHeadPtr = headPtr;
-            headPtr = headPtr->next;
+            head2 = current;
+            current = current->next;
         }
 
         return dummyHeadPtr->next;

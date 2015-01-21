@@ -15,8 +15,8 @@ struct RandomListNode {
     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
 };
 
-//Time O(N), space O(N)
-//Can u do it better ? with no extra space??
+//In-place solution
+//Time O(N), space O(1)
 class Solution1 {
 public:
     RandomListNode *copyRandomList(RandomListNode *head) {
