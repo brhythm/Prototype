@@ -20,6 +20,7 @@
 #include <vector>
 #include <queue>
 #include <assert.h>
+#include <stdio.h>
 using namespace std;
 
 
@@ -30,26 +31,25 @@ public:
         if (numOfRow >0 )
         {
             int numOfColumn = board[0].size();
-            queue<pair<int, int>> gridQueue;
+
             //check first row and last row
             for (int column=0; column < numOfColumn; ++column) {
                 if (board[0][column] == 'O') {
-                    gridQueue.push(make_pair(0, column));
+                    bfs(0, column, board);
                 }//else, continue check next column
                 if (board[numOfRow-1][column] == 'O') {
-                    gridQueue.push(make_pair(numOfRow-1, column));
+                    bfs(numOfRow-1, column, board);
                 }
             }
             //check first column and last column
             for (int row=0; row < numOfRow; ++row) {
                 if (board[row][0] == 'O') {
-                    gridQueue.push(make_pair(row, 0));
+                    bfs(row, 0, board);
                 }
                 if (board[row][numOfColumn-1] == 'O') {
-                    gridQueue.push(make_pair(row, numOfColumn-1));
+                    bfs(row, numOfColumn-1, board);
                 }
             }
-            bfs(gridQueue, board);
             //flip all remaining 0, revert Z->0
             for (int row=0; row < numOfRow; ++row) {
                 for (int column = 0; column < numOfColumn; ++column) {
@@ -62,21 +62,24 @@ public:
                     }
                 }
             }
-            
+
         }
     }
-    
-    void bfs(queue<pair<int, int>>& gridQueue, vector<vector<char>> &board)
+
+    void bfs(const int row, const int column, vector<vector<char>> &board)
     {
         int numOfRow = board.size();
         int numOfColumn = board[0].size();
-        
+        assert(board[row][column] == 'O');//assert that we start from '0' node
+        queue<pair<int, int>> gridQueue;
+        gridQueue.push(make_pair(row, column));
+
         while (!gridQueue.empty()) {
             auto grid = gridQueue.front();
             gridQueue.pop();
             int i = grid.first;
             int j= grid.second;
-            
+
             board[i][j] = 'Z';//tag as 'NOT flip'
             if ( i-1 >= 0 && board[i-1][j] == 'O') {
                 gridQueue.push(make_pair(i-1, j));
@@ -92,7 +95,7 @@ public:
             }
         }
     }
-    
+
 };
 
 //warning, the trick is this problem is how to get rid of the isVisitedMap, which takes O(N) space
@@ -102,36 +105,32 @@ public:
 //why BFS ?? imagine it in your head
 //for each node, the four surrounding nodes are just like the children of it , push it into the bfs queue
 //don't forget to mark node that has been visited
-
-int main()
-{
-    vector<vector<char>> board;
-    board.push_back({'X', 'X', 'X', 'X'});
-    board.push_back({'X', 'O', 'O', 'X'});
-    board.push_back({'X', 'X', 'O', 'X'});
-    board.push_back({'X', 'O', 'X', 'X'});
-    
+//
+//int main()
+//{
+//    vector<vector<char>> board;
+////    board.push_back({'X', 'X', 'X', 'X'});
+////    board.push_back({'X', 'O', 'O', 'X'});
+////    board.push_back({'X', 'X', 'O', 'X'});
+////    board.push_back({'X', 'O', 'X', 'X'});
+//
 //    board.push_back({'X', 'X', 'X'});
 //    board.push_back({'X', 'O', 'X'});
 //    board.push_back({'X', 'X', 'X'});
-    Solution test;
-    test.solve(board);
-    
-    for(auto& oneLine : board )
-    {
-        printf("[");
-        for(char c : oneLine )
-        {
-            printf("%c,", c);
-        }
-        printf("]\n");
-    }
-    
-    return 0;
-}
-
-
-
-
-
+//    Solution test;
+//    test.solve(board);
+//
+//    for(auto& oneLine : board )
+//    {
+//        printf("[");
+//        for(char c : oneLine )
+//        {
+//            printf("%c,", c);
+//        }
+//        printf("]\n");
+//    }
+//
+//    return 0;
+//}
+//
 
