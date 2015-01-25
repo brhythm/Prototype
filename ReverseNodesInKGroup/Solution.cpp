@@ -33,63 +33,46 @@ class Solution {
 public:
     ListNode *reverseKGroup(ListNode *head, int k) {
     
-        if (k > 1)
-        {
+            if (head == nullptr || k <= 1)
+            {
+                return head;
+            }
             ListNode dummy(-1);
             dummy.next = head;
-            ListNode* slowPtr = &dummy;
-            ListNode* fastPtr = &dummy;
+            ListNode* slow = head;
+            ListNode* fast= head;
+            ListNode* prev = &dummy;
             
-            while( fastPtr->next != nullptr)
+            while( fast != nullptr)
             {
-                for (int i=0; i < k && fastPtr != nullptr; ++i)
+                int index = 0;//warning, bug here when judging whehter k steps are moved
+                for (; index < k && fast != nullptr; ++index)
                 {
-                    fastPtr = fastPtr->next;
+                    fast = fast->next;
                 }
-                if (fastPtr == nullptr)
+                if (index < k)
                 {//k group is not found, we have finished the task
                     //do nothing
                     break;
                 }
-                
-                //now start insert firstslowptr right after fastPtr
-                ListNode* firstSlowPtr = slowPtr->next;
-                //warning, must connect the next k-group with the previous one
-                //bug here
-                slowPtr->next = fastPtr;
-                slowPtr = firstSlowPtr;
-                //printf("1)fast node:%d\n", fastPtr->val);
-                //printList(dummy.next, 1);
-                
-                while (slowPtr != fastPtr) {
-                    ListNode* nextSlowPtr = slowPtr->next;
-                    slowPtr->next = fastPtr->next;
-                    fastPtr->next = slowPtr;
-                    slowPtr = nextSlowPtr;
+                else
+                {
+                    //now start insert k nodes after prev
+                    ListNode* prevGroupTail = slow;
+                    while (slow!= fast) {
+                        ListNode* nextNode = slow->next;
+                        slow->next = prev->next;
+                        prev->next = slow;
+                        slow = nextNode;
+                    }
+                    //now all nodes in K group have been reversed
+                    prev = prevGroupTail;
+                    prev->next = fast;//WARNING connect two groups, bug here
+                    slow = fast;
                 }
-                //now all nodes in K group have been reversed
-                fastPtr = firstSlowPtr;
-                slowPtr = fastPtr;//warning, bug here. sync slowPtr before moving fastPtr
-                //printf("2)fast node:%d\n", fastPtr->val);
-                //printList(dummy.next, 2);
                 
             }
-            head= dummy.next;
-            
-        }
-        
-        return head;
-    }
-    
-    void printList (ListNode* head, int debugIndex)
-    {
-        printf("%d) ", debugIndex);
-        while(head != nullptr)
-        {
-            printf("%d," , head->val);
-            head = head->next;
-        }
-        printf("\n");
+            return dummy.next;
     }
 };
 

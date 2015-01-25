@@ -26,50 +26,49 @@ public:
         {
             return;
         }
-        ListNode* slowPtr = head;
-        ListNode* fastPtr = head;
-        ListNode* prevPtr = nullptr;
-        while(fastPtr != nullptr)
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* prev = nullptr;//prev of slow
+        while(fast != nullptr)
         {
-            prevPtr = slowPtr;
-            fastPtr = fastPtr->next;
-            slowPtr = slowPtr->next;
-            if (fastPtr != nullptr)
+            prev= slow;
+            fast = fast->next;
+            slow = slow->next;
+            if (fast != nullptr)
             {
-                fastPtr = fastPtr->next;
+                fast = fast->next;
             }
         }
-        //now slowPtr points to beginning of second half list
+        //now slow points to beginning of second half list
         //second half <= first half (if it is odd number)
-        prevPtr->next = nullptr;
+        prev->next = nullptr;
 
         //reverse second half
-        ListNode* current = slowPtr->next;
-        prevPtr = slowPtr;
-        prevPtr->next = nullptr;
-        while (current != nullptr)
-        {//insert current before prev
-            ListNode* next = current->next;
-            current->next = prevPtr;
-
-            prevPtr = current;
-            current = next;
+        ListNode midHead(-1);//midHead.next = nullptr
+        while (slow != nullptr) {
+            ListNode* next = slow->next;
+            slow->next = midHead.next;
+            midHead.next = slow;
+            slow = next;
         }
-        //now prev is the head of reversed second half
-
+        //merge two lists
+        ListNode dummyResult(-1);
+        prev = &dummyResult;
         ListNode* first = head;
-        ListNode* second = prevPtr;
-        //couple two list
+        ListNode* second = midHead.next;
         while(second != nullptr)
         {
-            ListNode* nextSecond = second->next;
-            ListNode* nextFirst = first->next;
-            second->next = first->next;
+            ListNode *nextFirst = first->next;
+            prev->next = first;
             first->next = second;
-
+            prev = second;
+            second = second->next;
             first = nextFirst;
-            second = nextSecond;
         }
+        if (first != nullptr) {
+            prev->next = first;
+        }
+        head = dummyResult.next;
 
     }
 };

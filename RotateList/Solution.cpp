@@ -7,7 +7,8 @@
  * return 4->5->1->2->3->NULL.
  *
  */
-
+//WARNING, must form a cycle, because k might be > n
+// fast and slow ptr does not work unless 
 #include <stddef.h>
 
 using namespace std;
