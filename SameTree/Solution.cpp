@@ -27,34 +27,18 @@ class Solution {
 	
 public:
     
-	bool isSameTree(TreeNode *sourceNodePtr, TreeNode *targetNodePtr)
-	    {
-	    	bool isSame = isSameNode(sourceNodePtr, targetNodePtr);
-	    	if ( isSame )
-	    	{// same node or both null
-	    		if ( sourceNodePtr != NULL)
-	    		{// same node, continue judge
-	    			// both left , right subtree same
-	    			isSame = isSameTree(sourceNodePtr->left, targetNodePtr->left) &&
-									isSameTree(sourceNodePtr->right, targetNodePtr->right);
-	    		}// both null, ok
-	    	}// not same tree
-	    	return isSame;
-	    }
-	    
-	    bool isSameNode(TreeNode *sourceNodePtr, TreeNode *targetNodePtr)
-	    {//TODO can be optimized
-	    	bool isSameNode = false;
-	    	if (sourceNodePtr != NULL && targetNodePtr != NULL )
-	    	{
-	    		isSameNode = ( sourceNodePtr->val == targetNodePtr->val );
-	    	}
-	    	else if ( sourceNodePtr == NULL && targetNodePtr == NULL )
-	    	{
-	    		isSameNode = true;
-	    	}
-	    	
-	    	return isSameNode;   	
-	    }
-    
+	bool isSameTree(TreeNode *source, TreeNode *target)
+    {
+        if (source == nullptr && target == nullptr)	
+        {
+            return true;
+        }
+        if ( source != nullptr && target != nullptr )
+        {
+            return isSameTree(source->left, target->left) &&
+                   isSameTree(source->right, target->right);
+        }
+        return false; 
+    }
+
 };
