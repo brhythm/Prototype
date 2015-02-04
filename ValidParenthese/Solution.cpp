@@ -14,7 +14,6 @@ public:
     bool isValid(string str) {
         int index=0;
         stack<char> closeBracketStack;
-        bool isValid = true;
         while (index < str.length()) {
            if (str[index] == '(' ) {
                 closeBracketStack.push(')');
@@ -25,40 +24,24 @@ public:
            else if (str[index] == '[') {
                closeBracketStack.push(']');
            }
-           else {//regular or close bracket
-               char expectedBracket = '*' ;//expect NO close bracket
-               if (!closeBracketStack.empty()) {
-                   expectedBracket = closeBracketStack.top();
+           else {//expect close brackets
+               if (!closeBracketStack.empty() &&
+                   closeBracketStack.top() == str[index]) {
+                   closeBracketStack.pop();
                }
-               if (isCloseBracket(str[index])) {
-                   //it is close bracket
-                   if (str[index] != expectedBracket) {
-                       return false;//TODO
-                   }
-                   else {// close bracket match expectation
-                       closeBracketStack.pop();
-                   }
+               else
+               {//stack is empty or close brackets does not match
+                   return false;
                }
-               //else regular don't care
            }
            index++;
         }
-        if (!closeBracketStack.empty()) {
-            isValid = false;
-        }
-        return isValid;
-    }
-
-    bool isCloseBracket(const char character) {
-        if ( character == '}' ||
-             character == ']' ||
-             character == ')')
-        {
-            return true;
+        if (!closeBracketStack.empty()) {//WARNING, bug here, check whether stack is empty
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 };

@@ -43,6 +43,13 @@ public:
         return maxArea;
     }
 };
+//Note:
+//We maintain a stack that has the bars that could be extended
+//Only calc rectangle area when a bar is pop out of the stack, because bars in the stack might still be extended further
+//push index in the stack s.t. it is easy to calc width
+//
+//In the alg, every bar MUST be pushed into the stack otherwise that solo bar area would not be calculated
+//Push a dummy 0 at the end of height to force everything to be poped out
 
 //int main()
 //{
