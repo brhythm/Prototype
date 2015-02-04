@@ -20,34 +20,38 @@ struct TreeNode {
 
 class Solution {
 public:
-    //Time O(N) for sure
-    //Space O(lgN), the space complexity for these recursive functions is actually:
-    //the deepest level of recursion ? in this case ->tree height
-    //In other words, the recursive function would start to return once reach the deepest level
-    //
-    bool areTreesIdentical(TreeNode *rootA, TreeNode *rootB) {
-        if ( rootA != NULL && rootB != NULL && rootA->val == rootB->val) {
-            //current node is identical
-            if (areTreesIdentical(rootA->left, rootB->left)) {
-                //left subtree is identical
-                return areTreesIdentical(rootA->right, rootB->right);
-            }
-            else {
-                // left subtree is NOT identical
-                return false;
-            }
-        }
-        else if (rootA == NULL && rootB == NULL) {
-            // reach the end of tree, identical!
+    //Time O(N) , space O(H)
+    bool isSymmetric(TreeNode *root) {
+        if (root == nullptr)
+        {
             return true;
         }
-        else {// rootA or rootB is null,
-              // rootA->val != rootB-> val
-              //Not identical
-            return false;
+        else
+        {
+            return isSymmetricTrees(root->left, root->right); 
         }
     }
 
+    bool isSymmetricTrees(const TreeNode* source, const TreeNode* target)
+    {
+        if (source == nullptr && target == nullptr)
+        {
+            return true;
+        }
+        if (source != nullptr && target != nullptr)
+        {
+            if (source->val == target->val)
+            {
+                return isSymmetricTrees(source->left, target->right) &&
+                       isSymmetricTrees(source->right, target->left);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return false;
+    }
 };
 
 
