@@ -35,8 +35,15 @@ public:
         }
         if ( source != nullptr && target != nullptr )
         {
-            return isSameTree(source->left, target->left) &&
-                   isSameTree(source->right, target->right);
+			if (source->val == target->val)
+			{
+            	return isSameTree(source->left, target->left) &&
+                   	   isSameTree(source->right, target->right);
+			}
+			else
+			{
+		    	return false;
+			}
         }
         return false; 
     }
