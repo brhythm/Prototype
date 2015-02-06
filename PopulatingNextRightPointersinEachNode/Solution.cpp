@@ -20,7 +20,7 @@
  * };
  */
 #include <stddef.h>
-#include <queue>
+#include <deque>
 using namespace std;
 
 class Solution {
@@ -32,41 +32,42 @@ class Solution {
 
 public:
 
-    /* If your first thougth is level order travel, it is intuitive that you
-     * can keep a prevNodePtr, and alwasy connect prevNodePtr and currentNodePtr
-     * if prevNodePtr->next is NULL
-     * The only problem here is nodes on right border shall point to NULL,
-     * go through these nodes again and set the next to NULL
-     *
-     * Running time(O(N)), space compliextyO(O(N))
-    */
-    void connect(TreeLinkNode *rootPtr) {
-        queue<TreeLinkNode*> nodeQueue;
-        if (rootPtr != NULL) {
-            TreeLinkNode* prevNodePtr = NULL;
-            nodeQueue.push(rootPtr);
-            while (!nodeQueue.empty()) {
-                TreeLinkNode* nodePtr = nodeQueue.front();
-                nodeQueue.pop();
-                if (prevNodePtr != NULL &&
-                        prevNodePtr->next == NULL ) {
-                    prevNodePtr->next = nodePtr;
-                }
-                if (nodePtr->left != NULL) {
-                    nodeQueue.push(nodePtr->left);
-                    nodePtr->left->next = nodePtr->right;
-                }
-                if (nodePtr->right != NULL) {
-                    nodeQueue.push(nodePtr->right);
-                }
-                prevNodePtr = nodePtr;
-            }
-            while (rootPtr != NULL) {
-                rootPtr->next = NULL;
-                rootPtr = rootPtr->right;
-            }
+    //The first thought is level order traversal
+    //then set each node in current queue to point to its neighbor
+    //However, queue does not support random access. We will use deque here
+    
+    //Time O(N), Space O(N)
+    void connect(TreeLinkNode *root) {
+        if ( root==nullptr) {
+            return;
         }
-
+        deque<TreeLinkNode*> current;
+        deque<TreeLinkNode*> next;
+        current.push_back(root);//everything in queue is NOT null
+        
+        while (!current.empty()) {
+            size_t size = current.size();
+            int i=0;
+            for (; i <  size -1; ++i) {
+                current[i]->next = current[i+1];
+                if (current[i]->left != nullptr) {
+                    next.push_back(current[i]->left);
+                }
+                if (current[i]->right != nullptr) {
+                    next.push_back(current[i]->right);
+                }
+            }
+            //now i =size-1;
+            current[i]->next = nullptr;
+            if (current[i]->left != nullptr) {
+                next.push_back(current[i]->left);
+            }
+            if (current[i]->right != nullptr) {
+                next.push_back(current[i]->right);
+            }
+            current.clear();
+            swap(current, next);
+        }
     }
 
 };
