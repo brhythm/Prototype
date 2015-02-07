@@ -42,11 +42,8 @@ public:
                 result.push_back(level);
                 swap(next, current);
             }
-            reverse(result.begin(), result.end());
             return result;
         }
     }
 };
-
-
 
