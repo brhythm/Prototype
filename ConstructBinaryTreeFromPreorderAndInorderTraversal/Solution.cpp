@@ -40,11 +40,6 @@ public:
         {//TODO terminate condition
             return NULL;
         }
-        else if (pStart == pEnd)
-        {
-            TreeNode* leafNode = new TreeNode(preorder[pStart]);
-            return leafNode;
-        }
         else
         {
             //pStart node is the root of subtree
