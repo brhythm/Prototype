@@ -24,40 +24,30 @@ using namespace std;
  };
 
 class Solution {
-public:
-    //Time O(N), Space O(N)
+public://Time O(N), Space O(lgN)
     bool isValidBST(TreeNode *root) {
-        vector<int> nodes;
-        return inorderWalk(root, nodes);
-
+        return isValidBST(root, INT_MIN, INT_MAX);
     }
-
-    bool inorderWalk(TreeNode* root, vector<int>& nodes)
+    
+    bool isValidBST(TreeNode* root, int lower, int upper)
     {
         if (root == nullptr) {
             return true;
         }
-        //validate left subtree
-        if (!inorderWalk(root->left, nodes)) {
-            return false;
-        }
-        //validate root
-        if (!nodes.empty() && root->val <= nodes.back()) {
-            return false;
+        if (root->val > lower &&
+            root->val < upper) {
+            return isValidBST(root->left, lower, root->val) &&
+            isValidBST(root->right, root->val, upper);
         }
         else
-        {//root value is valid
-            nodes.push_back(root->val);
+        {
+            return false;
         }
-        //validate right subtree
-        return inorderWalk(root->right, nodes);
     }
 
 };
 
-//warning, the obstacle in this problem is
-//validation must make sure all nodes in the left/right substree is smaller/greater than root node
-//that's why simply verfiying each node is NOT correct
+
 
 
 
