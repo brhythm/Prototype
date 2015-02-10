@@ -5,9 +5,6 @@
  * Would your previous solution still work?
  *
  */
-
-//Warning, all nodes on board would have next->null, left child might also on the board
-//time O(N)
 #include "stddef.h"
 #include <queue>
 using namespace std;
@@ -19,7 +16,8 @@ using namespace std;
   };
 
 class Solution {
-public:
+public://Yes, this solution still works
+       //Time O(N) , space O(N)
     void connect(TreeLinkNode *rootPtr) {
 
     	if (rootPtr != NULL) {
