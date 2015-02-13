@@ -15,37 +15,21 @@
 class Solution {
 public:
     ListNode *insertionSortList(ListNode *head) {
-        if (head == nullptr)
-        {
-            return nullptr;
-        }
         ListNode dummy(-1);
-        dummy.next = head;
-        while (head->next != nullptr)
-        {//head is the tail of sorted list
-            ListNode* currentNodeToInsert = head->next;
-            ListNode* nextNodeToInsert = head->next->next;
-            head->next = nullptr;//disconnect head->next from the sorted list
-            //prepare to insert head->next
-            ListNode* current = &dummy;
-            while(current->next != nullptr &&
-                  currentNodeToInsert->val >= current->next->val)
-            {
+        ListNode* current = &dummy;
+        while (head != nullptr) {
+            current = &dummy;
+            while (current->next != nullptr &&
+                   head->val > current->next->val) {
                 current = current->next;
             }
-            //now currentNodeToInsert  should be inserted after current
-            if ( current->next != nullptr )
-            {//insertion does not happen at tail
-                currentNodeToInsert->next = current->next;
-                current->next = currentNodeToInsert;
-            }
-            else
-            {//current->next == nullptr
-            //restore currentNodeTOInsert to be head->next
-                head->next = currentNodeToInsert;
-                head = currentNodeToInsert;//update tail
-            }
-            head->next = nextNodeToInsert;
+            //now current < head < current->next
+            //OR if current->next = NULL, it means current < head
+            //insert head after current
+            ListNode* next = head->next;
+            head->next = current->next;
+            current->next = head;
+            head = next;
         }
         return dummy.next;
     }

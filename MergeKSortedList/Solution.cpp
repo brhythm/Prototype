@@ -57,7 +57,8 @@ public:
     }
 };
 
-//Yes, we could use merge sort, time complexity O(lgK*N)
+//
+//Note: Yes, we could also use merge sort, time complexity O(lgK*N)
 //but space complexity is O(N)
 
 //int main()
