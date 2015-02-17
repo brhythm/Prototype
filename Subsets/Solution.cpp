@@ -25,6 +25,12 @@ using namespace std;
 
 class Solution {
 public:
+//Make sure you know how to calc time complexity O(2^N)
+//T(n) = T(n-1)+T(n-2)+T(n-3)+...+T(1)
+//
+//Or think about this problem as a combination sum
+//this problem is asking for: Cn0+Cn1+Cn2+...Cnn = 2^n;
+//Learn how to prove it
     vector<vector<int> > subsets(vector<int> &S) {
         vector<vector<int>> result;
         if (!S.empty()) {
