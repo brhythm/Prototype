@@ -26,34 +26,39 @@
 using namespace std;
 class Solution {
 public:
+    //Note: three way partition, you know the pivot already
     void sortColors(int A[], int n) {
 
-        //[a,b,c,d,e,f,g]
-        // i           j
-        // A[index] == 0 if index < i
-        //          == 1 if index >=i && <=j
-        //          == 2 if index > j
-        //why do we choose to init i, j in this way ?
-        //i, j would not be out of bound if there is no 1, or no 0, or no 2
-        int i=0;
-        int j=n-1;
+        int i=-1;
+        int j=-1;
+        int pivot = 1;
 
-        //WARNING,init value of  A[i], A[j] is not guaranteed
-        for (int index=0; index <=j; ) {
-            if (A[index] == 0) {
-                swap(A[index], A[i]);
-                ++i;
-                ++index;//if A[i]==0 index = i = 0, keep increasing both index, ok
+        for (int index=0; index <n; ++index) {
+            if (A[index] < pivot) {
+                if (i == j) {
+                    //WARNING: bug here
+                    //there is no == zone
+                    swap(A[index], A[++i]);
+                    ++j;
+                }
+                else
+                {   //there is == zone
+                    swap(A[index], A[++i]);
+                    swap(A[index], A[++j]);
+                }
             }
-            else if ( A[index] == 1) {
-                ++index;//do nothing
+            else if (A[index] == pivot)
+            {
+                swap(A[index], A[++j]);
             }
-            else {//A[index] == 2
-                swap(A[index], A[j]);
-                --j;
-            }
+            //else A[index] > pivot, do nothing
         }
     }
 };
+
+int main()
+{
+    return 0;
+}
 
 

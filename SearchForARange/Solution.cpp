@@ -1,7 +1,7 @@
 /**
  */
 
-//Given a sorted array of integers, find the starting and ending position of a given target value.
+//Given a sorted array of integers, find the lowering and uppering position of a given target value.
 //
 //Your algorithm's runtime complexity must be in the order of O(log n).
 //
@@ -17,49 +17,42 @@ using namespace std;
 class Solution {
 public:
     vector<int> searchRange(int A[], int n, int target) {
-        int start = -1;
-        int end = -1;
+        int lower = -1;
+        int upper = -1;
         if (n > 0) {
-            start = n;//default to invalid index n
-            end = -1;//default to invalid index -1;
-            binarySearch(A, 0, n-1, target, start, end);
-            if (start == n) {
-                start = -1;//target not found
+            lower = n;//default to invalid index n
+            upper = -1;//default to invalid index -1;
+            binarySearch(A, 0, n-1, target, lower, upper);
+            if (lower == n) {
+                lower = -1;//target not found
             }
         }
-        vector<int> result = {start, end};
+        vector<int> result = {lower, upper};
         return result;
     }
     
-    void binarySearch(int A[], int searchStart , int searchEnd, int target, int& start, int& end)
+    void binarySearch(int A[], int start , int end, int target, int& lower, int& upper)
     {
-        if (searchStart > searchEnd) {
+        if (start > end) {
             return;
         }
-        else if (searchStart == searchEnd )
-        {
-            if (A[searchStart] == target) {
-                start = min(start, searchStart);
-                end = max(end, searchEnd);
-            }//else target not found, return, do nothing
-        }
         else
-        {//searchStart < searchEnd
-            int searchMedian = (searchStart + searchEnd)/2;
-            if (A[searchMedian] == target) {
-                start = min(start, searchMedian);
-                end = max(end, searchMedian);
+        {//start < end
+            int median = (start + end)/2;
+            if (A[median] == target) {
+                lower = min(lower, median);
+                upper = max(upper, median);
                 //continue search in the possible range
-                binarySearch(A, searchStart, searchMedian-1, target, start, end);
-                binarySearch(A, searchMedian+1, searchEnd, target, start, end);
+                binarySearch(A, start, median-1, target, lower, upper);
+                binarySearch(A, median+1, end, target, lower, upper);
             }
-            else if (A[searchMedian] > target)
+            else if (A[median] > target)
             {
-                binarySearch(A, searchStart, searchMedian-1, target, start, end);
+                binarySearch(A, start, median-1, target, lower, upper);
             }
             else
-            {//A[searchMedian] < target
-                binarySearch(A, searchMedian+1, searchEnd, target, start, end);
+            {//A[median] < target
+                binarySearch(A, median+1, end, target, lower, upper);
             }
         }
     }
