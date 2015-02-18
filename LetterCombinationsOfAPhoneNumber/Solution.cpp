@@ -16,7 +16,7 @@
 using namespace std;
 
 class Solution {
-public:
+public://Time O(3^N), N is the length of digits
     vector<string> letterCombinations(string digits) {
 
         vector<string> result;
