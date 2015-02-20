@@ -13,6 +13,9 @@ using namespace std;
 
 class Solution {
 public:
+    //Must know how to analyze run time:
+    //T(n) = nT(n-1)=n(n-1)T(n-2) =n!
+    //Also, we are generating permuations for n, which is n! 
     vector<vector<int> > permute(vector<int> &num) {
         vector<int> candidate;
         vector<vector<int> > solution;
