@@ -19,7 +19,7 @@
 using namespace std;
 
 class Solution {
-public:
+public://Time O(N^2), Space O(N)
     vector<vector<string>> partition(string s) {
         int n = s.length();
        // bool d[n][n];
@@ -39,48 +39,39 @@ public:
                 }
                 else
                 {// i < j-1
-                    d[i][j] = s[i]==s[j] ? d[i+1][j-1]: false;
+                    d[i][j] = s[i]==s[j] && d[i+1][j-1];
                 }
             }
         }
         
         vector<vector<string>> solution;
-        vector<string> candidateSolution;
-        
-        dfs(0, 0, s, d, candidateSolution, solution);
+        vector<string> path;
+        getPartition(0, s, d, path, solution);
         return solution;
     }
     
-    void dfs(int start, int end, string& s,  vector<vector<bool>>& isPalindrome, vector<string>& candidateSolution, vector<vector<string>>& solution)
+    void getPartition(int start, const string& s,  const vector<vector<bool>>& isPalindrome,
+             vector<string>& path, vector<vector<string>>& solution)
     {
         int n =  s.size() ;
         if (start >=n )
         {//terminate , add candidateSolution to solution
-            if (!candidateSolution.empty())
-            {
-                solution.push_back(candidateSolution);
-            }
+            solution.push_back(path);
             return;
         }
-        else if ( end >=n)
-        {//invalid attempt, return
-            return;
-        }
-        else
+       else
         {
-            if (isPalindrome[start][end])
-            {
-                //write down this palindrome
-                candidateSolution.push_back(s.substr(start, end-start+1));
-                dfs(end+1, end+1, s, isPalindrome, candidateSolution, solution);
-                //once that dfs returned, that solution has been recorded
-                
-                //backtrack
-                candidateSolution.pop_back();
-
-            }
-            //else not palindrome
-            dfs(start, end+1, s, isPalindrome, candidateSolution, solution);
+           vector<string> restorePath = path;
+           for (int end=start; end < n; ++end)
+           {
+               if (isPalindrome[start][end])
+               {
+                   path.push_back(s.substr(start, end-start+1));
+                   getPartition(end+1, s, isPalindrome, path, solution);
+                   //backtrack
+                   path = restorePath;
+               }//else, try next end
+           }
         }
     }
 };

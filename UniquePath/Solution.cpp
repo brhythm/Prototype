@@ -14,7 +14,7 @@
 using namespace std;
 class Solution {
 public:
-    //Time O(MN)
+    //Time O(mn) space O(mn)
     int uniquePaths(int m, int n) {
 
         // construct D[m][n] , init to 0

@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 using namespace std;
-
+//Time O(N!) => T(n) = nT(n-1)
 class Solution {
     class QueenLocation {
     private:
