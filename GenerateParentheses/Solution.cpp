@@ -11,7 +11,7 @@
 #include <set>
 using namespace std;
 class Solution {
-public:
+public://What is the running time??
     vector<string> generateParenthesis(int n) {
         vector<string> solution;
         if ( n < 1) {
