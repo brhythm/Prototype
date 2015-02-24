@@ -25,11 +25,11 @@
 #include <unordered_set>
 using namespace std;
 
-//Time O(min(26*N, dic.size) ), where n is the length of word
+//Time at each level: O(min(26*N*M, dic.size) ), where n is the length of word, M is the number of words at this level
+//If dic.size is small, then we could probably directly calc distance of two words in dictionary, which takes O(N*M)
 class Solution {
 public:
     int ladderLength(string start, string end, unordered_set<string> &dict) {
-        int shortestPath = 0;
         bool isFound = false;
         //dict.insert(end);//maybe unnecessary
         
@@ -43,7 +43,6 @@ public:
                 string word = current.front();
                 current.pop();
                 if (word.compare(end) == 0) {
-                    shortestPath = level;
                     isFound = true;
                     break;//terminate algorithm
                 }
@@ -65,7 +64,7 @@ public:
             ++level;
         }
         
-        return shortestPath;
+        return level;
     }
 };
 
