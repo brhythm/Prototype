@@ -13,7 +13,7 @@
 using namespace std;
 
 class Solution {
-public:
+		public://Time: Catlan number , what the hell is that ??
     vector<string> generateParenthesis(int n) {
         vector<string> solution;
         string candidate;
