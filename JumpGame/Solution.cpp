@@ -17,7 +17,11 @@
 using namespace std;
 
 class Solution {
-public://Warning, time complexity must be O(N)
+public:
+    //Why this could be solved by greedy instead of DP ?
+    //because there is no overlapping subproblems
+    //how far we could go from i has nothing to do with [0:i-1] 
+    //Warning, time complexity must be O(N)
     bool canJump(int A[], int n) {
         if (n <= 0) {
             return false;
