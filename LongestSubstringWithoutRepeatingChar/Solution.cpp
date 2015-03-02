@@ -10,12 +10,13 @@
 #include <climits>
 using namespace std;
 class Solution {
-public:
+public://Time O(N^2), Space O(n)
     int lengthOfLongestSubstring(string s) {
         int longestSubs = 0;
         if (s.length() > 0) {
-            int lastSeen[256];//char -> index
-            memset(&lastSeen[0], -1, sizeof(int)*256);
+            //int lastSeen[256];//char -> index
+            //use memset on interger is wrong, it set by byte
+            vector<int>  lastSeen(256, -1);
             int start = 0;//start index of longest ss
             for (int i=0; i < s.length(); ++i) {
                 int charIndex = s[i]-'\0';//REMEMBER, ascii table starts from null char
@@ -32,7 +33,7 @@ public:
                     //update start
                     start = lastSeen[charIndex]+1;
                     //must update lastSeen again
-                    lastSeen[charIndex]=i;
+                    lastSeen[charIndex]=i;//WARNING, this is the trick
                     //continue, try to extend localMax as much as possible
                 }
             }
