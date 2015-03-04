@@ -19,24 +19,22 @@
 #include <iostream>
 using namespace std;
 class Solution {
-public:
+public://Time O(N), n is the number of elements
+       //Space O(x), x is the number of row, but this is just a small optimization
     int minimumTotal(vector<vector<int> > &triangle) {
         int n = triangle.size();
-        int globalMinSum = INT_MAX;
         //scan from bottom to top is much much much easier!!
-        vector<int> prevMinSum(n+1, 0);//init vector with n zeros,
+        vector<int> minSum(n+1, 0);//init vector with n zeros,
         for (int row = n-1; row >=0; --row)
         {
-            globalMinSum = INT_MAX;//reset globalMin to get min of current row
             for (int column = 0; column <= row; ++column)
             {
-                int localMin = min(prevMinSum[column], prevMinSum[column+1]) + triangle[row][column];
-                //prevMinSum[column] is useless now, overwrite safe
-                prevMinSum[column] = localMin;
-                globalMinSum = localMin < globalMinSum ? localMin: globalMinSum;
+                int localMin = min(minSum[column], minSum[column+1]) + triangle[row][column];
+                //minSum[column] is useless now, overwrite safe
+                minSum[column] = localMin;
             }
         }
-        return globalMinSum;
+        return minSum[0];
     }
 };
 

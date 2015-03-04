@@ -17,18 +17,18 @@ public:
             int start = 0;
             int end = height.size()-1;
             while (start < end) {
-                int height = min(height[start], height[end]); 
+                int barHeight = min(height[start], height[end]); 
                 int width = end-start;
-                maxVolume = max(height*width, maxVolume);
+                maxVolume = max(barHeight*width, maxVolume);
                 if (height[start] < height[end]) {
                     while (start <= end &&
-                           height[start] <= height)
+                           height[start] <= barHeight)
                         ++start;
                 }
                 else
                 {
                     while (start <= end &&
-                            height[end] <= height)
+                            height[end] <= barHeight)
                     --end;
                 }
             }
