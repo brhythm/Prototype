@@ -30,7 +30,7 @@ public:
                     barsToExtend.pop();
                     //printf("i=%d, top index=%d\n", i , barsToExtend.top());
                     int stackTopIndex = barsToExtend.empty() ? -1 : barsToExtend.top();
-                    int candidateWidth =  i - 1 - stackTopIndex; // Must use stackTopIndex to calculate width
+                    int candidateWidth =  i - 1 - stackTopIndex; // WARNING bug here.Must use stackTopIndex to calculate width
                     //printf("debug h = %d, w = %d\n", candidateHeight, candidateWidth);
                     //calculate candidate one
                     maxArea = max(maxArea, candidateHeight*candidateWidth);
