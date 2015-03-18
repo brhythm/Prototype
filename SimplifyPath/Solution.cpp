@@ -57,8 +57,7 @@ public:
         vector<string> result;
         assert(path[0] == '/');
         size_t firstDelimiter = 0;
-        while ( firstDelimiter < path.length() &&
-                path.find_first_of(delimiter, firstDelimiter+1) != string::npos)
+        while ( path.find_first_of(delimiter, firstDelimiter+1) != string::npos)
         {
             size_t nextDelimiter = path.find_first_of(delimiter, firstDelimiter+1);
             result.push_back(path.substr(firstDelimiter+1, nextDelimiter-firstDelimiter-1));
