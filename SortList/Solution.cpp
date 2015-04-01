@@ -52,7 +52,8 @@ public:
         }
         return dummy.next;
     }
-    
+
+    //TODO simplify the following function !!    
     //merge two sorted list  , given their maxLength
     //warning, either list might have NOT end with NULL, i.e. NO sentinel
     //warning, must NOT change tail->next after merge
