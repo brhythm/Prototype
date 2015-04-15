@@ -8,82 +8,59 @@
  */
 #include <algorithm>
 #include <cmath>
-#include <unordered_map>
+#include <map>
+#include <cmath>
 using namespace std;
 class Solution {
 public:
     int trap(int A[], int n) {
-        if (n > 0) 
+        if (n <= 0)
         {
-            unordered_map<int, pair<int,int>> valleys;//bottomIndex, <leftWallIndex, rightWallIndex>
+            return 0;
         }
-        //scan from left to right, find all decreasing trend
-        int leftWallIndex = -1; 
-        for (int i =0; i < n-1; ++i)
-        {
-            if(A[i] >= A[i+1])
-            {
-                if (leftWallIndex == -1)
-                {
-                    leftWallIndex = i;
-                }
-            }
-            else
-            {//we are at bottom of valley or its not valley at all 
-                if (A[leftWallIndex] > 0 )
-                {
-                    valleys[i] = make_pair<int,int>(leftWallIndex, -1);
-                    leftWallIndex = -1;
-                }
+        int leftWall[n];
+        fill(leftWall, leftWall+n, 0);
+        int rightWall[n];
+        fill(rightWall, rightWall+n, 0);
+        int max = A[0];
+        //scan from left to right
+        for (int i=0; i<n; ++i) {
+            leftWall[i] = max;
+            if (A[i] > max) {
+                max = A[i];
             }
         }
-        //scan from right to left, find all decreasing trend
-        int rightWallIndex = -1;
-        for (int i = n-1; i>=1; --i) 
-        {
-            if (A[i] >= A[i-1])
-            {
-                if (rightWallIndex == -1)
-                {
-                    rightWallIndex = i;
-                }
-            }
-            else
-            {
-                if (A[rightWallIndex] > 0 && valleys.find(i) != valleys.end())
-                {
-                    valleys[i]->second.second = rightWallIndex;
-                    rightWallIndex = -1;
-                }
+        //scan from right to left
+        max = A[n-1];
+        for (int i=n-1; i>=0; --i) {
+            rightWall[i] = max;
+            if (A[i] > max) {
+                max = A[i];
             }
         }
         int sum = 0;
-        for (auto iter=valleys.begin(); iter != valleys.end(); ++iter)
-        {
-            pair<int, int> bounds = iter->second;
-            if (bounds.first >=0 && bounds.second >=0)
-            {//both wall detected
-                int left = bounds.first;
-                int right = bounds.second; 
-                int amount = ( right-left+1 )*max(A[left], A[right]);
-                for (int i=left; i <= right; ++i)
-                {
-                    amount-= A[i];
-                }
-                sum += amount;
+        for (int i=0; i < n; ++i) {
+            int water = min(leftWall[i], rightWall[i])-A[i];
+            if (water > 0) {
+                sum += water;
             }
         }
+        return sum;
     }
 };
 
 
 int main()
 {
-	int array[] = {0,1,0,2,1,0,1,3,2,1,2,1};
-	int n=12;
-//	int array[] = {5,2,1,2,1,5};
-//	int n = 6;
-
+//	int array[] = {0,1,0,2,1,0,1,3,2,1,2,1};
+//	int n=12;
+//    int array[] = {5,4,1,2};
+//    int n = 4;
+    //corner case
+	int array[] = {5,2,1,2,1,5};
+	int n = 6;
+//    int array[] = {5,5,1,7,1,1,5,2,7,6};
+//    int n = 10;
 //	int array[]={2,4,5,6,8,5,5,0,0,0,3,3};
 //	int n = 12;
 	Solution test;
