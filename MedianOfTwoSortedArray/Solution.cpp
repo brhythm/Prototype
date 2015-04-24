@@ -5,6 +5,7 @@
 #include <cmath>
 using namespace std;
 
+//Try to consider median as the centre of gravity
 //TODO Do it again!!!!
 class Solution {
 public:
