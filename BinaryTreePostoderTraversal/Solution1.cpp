@@ -5,8 +5,9 @@
  *
  */
 #include <vector>
-#include <stack>
 #include <stddef.h>
+#include <assert.h>
+#include <algorithm>
 using namespace std;
 
  struct TreeNode {
@@ -16,7 +17,7 @@ using namespace std;
      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  };
 
- //Time complexity O(N)
+ //Time complexity O(N), Space O(1)
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode *root) {
@@ -53,45 +54,33 @@ public:
                 root = root->right;
             }
         }
-        return result; 
+        return result;
     }
 
     void printReversePath(TreeNode* source, TreeNode* target, vector<int>& result)
     {//print [ target, ... , source ]
-        TreeNode* head = reverse(source, target);
-        while( head != nullptr && head != origSource)
+        size_t origSize = result.size();
+        for (TreeNode* head=source; head != target->right; head = head->right)
         {
             result.push_back(head->val);
-            head = head->right;
         }
-        if (head != nullptr)
-        {//head == origSource
-            result.push_back(head->val);
-        }
-        reverse(source, target);
-    }
-
-    TreeNode* reverse(TreeNode* source, TreeNode* target)
-    {// reverse list, output new list head, new list terminate with null 
-        if (source == target)
-        {
-            return source;
-        }
-        TreeNode dummy(-1);
-        assert(source != nullptr && target != nullptr);
-        TreeNode* head = source;
-        while ( head != target->right)
-        {
-            TreeNode* nextHead = head->right;
-            TreeNode* nextNode = dummy->right;
-            dummy->right = head;
-            head->right = nextNode;
-            head = nextHead; 
-        }
-        return dummy.right;
-    }
+        reverse(result.begin()+origSize, result.end());
+   }
 };
 
+int main()
+{
+    TreeNode head(1);
+    //TreeNode two(2);
+    //head.right = &two;
+    Solution test;
+    vector<int> result = test.postorderTraversal(&head);
+    for(int value: result)
+    {
+        printf("%d,", value);
+    }
+    return 0;
+}
 
 
 
