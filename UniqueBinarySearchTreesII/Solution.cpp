@@ -15,7 +15,6 @@
 
 using namespace std;
 
- // Definition for binary tree
  struct TreeNode {
      int val;
      TreeNode *left;
@@ -24,60 +23,51 @@ using namespace std;
  };
 
 class Solution {
-public:
-     //what is time complexity ???
+	public://Time complexity: Catalan number. What the hell is that?
+     vector<TreeNode *> generateTrees(int n) {
+         return getSubTree(1, n);
+     }
+     vector<TreeNode*> getSubTree(int start, int end)
+     {
+         vector<TreeNode*> result;
+         if (start <= end)
+         {
+             for (int i=start; i <= end; ++i)
+             {
 
-    vector<TreeNode *> generateTrees(int n) {
-        return generateSubTree(1, n);
-    }
-
-    vector<TreeNode*> generateSubTree(int start, int end)
-    {
-        vector<TreeNode*> subTreeRoots;
-        if (start < end )
-        {
-            for(int i = start; i <= end ; ++i)
-            {
-                vector<TreeNode*> leftSubTrees = generateSubTree(start, i-1);
-                vector<TreeNode*> rightSubTrees = generateSubTree(i+1, end);
-                //note left or right subtree vector would never be empty
-                //because NULL pointer would be returned it the subtree is empty
-                for(TreeNode* leftChild: leftSubTrees)
-                {
-                    for(TreeNode* rightChild: rightSubTrees)
-                    {
-                        TreeNode* root = new TreeNode(i);
-                        root->left = leftChild;
-                        root->right = rightChild;
-                        subTreeRoots.push_back(root);
-                    }
-                }
-            }
-        }
-        else if (start == end)
-        {
-            TreeNode* leafNode = new TreeNode(start);
-            subTreeRoots.push_back(leafNode);
-        }
-        else
-        {//start > end , terminate algorithm
-            subTreeRoots.push_back(NULL);
-        }
-        return subTreeRoots;
-    }
+                 vector<TreeNode*> leftTrees = getSubTree(start,i-1);
+                 vector<TreeNode*> rightTrees = getSubTree(i+1, end);
+                 for(TreeNode* left : leftTrees)
+                 {
+                     for (TreeNode* right: rightTrees)
+                     {
+                         TreeNode* root = new TreeNode(i);
+                         root->left = left;
+                         root->right = right;
+                         result.push_back(root);
+                     }
+                 }
+             }
+         }
+         else
+         {//start > end,
+             //WARNING, bug here , must put a null
+             result.push_back(nullptr);
+         }
+         return result;
+     }
 };
-//The trick in this problem is devide the problem into left subtree and right subtree
 
 int main()
 {
+    TreeNode head(1);
+    //TreeNode two(2);
+    //head.right = &two;
     Solution test;
-
-//    vector<TreeNode*> result =  test.generateTrees(1);
-//    for(auto node: result)
-//    {
-//
-//    }
-    return 0;
+   return 0;
 }
+
+
+
 
 

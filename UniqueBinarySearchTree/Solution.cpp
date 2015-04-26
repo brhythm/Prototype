@@ -8,7 +8,9 @@
 #include <stdio.h>
 
 class Solution {
-public:
+public://Time O(N^2)
+	   //The result of this problem is Catalan number Cn,
+       //we compute it efficiently by DP
 	int numTrees(int n) {
     	int* numTreesArrayPtr = new int[n+1];
     	numTreesArrayPtr[0] = 1;
