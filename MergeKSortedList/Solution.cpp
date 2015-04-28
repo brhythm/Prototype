@@ -59,7 +59,8 @@ public:
 
 //
 //Note: Yes, we could also use merge sort, time complexity O(lgK*N)
-//but space complexity is O(N)
+//space complexity is O(1), Note merge two sorted list can be in-place
+//Merge two sorted array takes O(N) space
 
 //int main()
 //{
