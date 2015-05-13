@@ -5,6 +5,7 @@
 #include <cmath>
 using namespace std;
 
+//Think about extreme cases, it makes your life much easier
 //Try to consider median as the centre of gravity
 //TODO Do it again!!!!
 class Solution {
@@ -40,12 +41,10 @@ double findMedianSortedArrays(int A[], int m, int B[], int n) {
 
 };
 
-
-//
-//If (m+n)/2 > k && a[m/2-1] > b[n/2-1] , drop Section 2
-//If (m+n)/2 > k && a[m/2-1] < b[n/2-1] , drop Section 4
-//If (m+n)/2 < k && a[m/2-1] > b[n/2-1] , drop Section 3
-//If (m+n)/2 < k && a[m/2-1] < b[n/2-1] , drop Section 1
+//If (m+n)/2 > k && a[m/2] > b[n/2] , drop Section 2
+//If (m+n)/2 > k && a[m/2] < b[n/2] , drop Section 4
+//If (m+n)/2 < k && a[m/2] > b[n/2] , drop Section 3
+//If (m+n)/2 < k && a[m/2] < b[n/2] , drop Section 1
 //
 //int main()
 //{
