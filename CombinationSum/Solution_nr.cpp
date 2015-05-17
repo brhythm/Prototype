@@ -31,7 +31,13 @@ public:
         {
             if (currentSum == target)
             {
-                result.push_back(path);//it would backtrack in next iteration
+                result.push_back(path);
+                // backtrack
+                path.pop_back();
+                int prevIndex = index.back();
+                index.pop_back();
+                currentSum -= input[prevIndex];
+                i = prevIndex+1;
             }
             else if ( i == input.size() || currentSum + input[i] > target)
             {
@@ -58,9 +64,25 @@ public:
         }
         return result;
     }
-}
+};
 
 int main()
 {
+    Solution test;
+    vector<int> input = {2,3,6,7};
+    vector<vector<int>> result = test.combinationSum(input, 7);
+    for (vector<int>& solution : result) {
+        printf("[");
+        for (int digit : solution) {
+            printf("%d,", digit);
+        }
+        printf("]\n");
+    }
     return 0;
 }
+
+
+
+
+
+

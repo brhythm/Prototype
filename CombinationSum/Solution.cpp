@@ -18,6 +18,9 @@
 using namespace std;
 class Solution {
 public://Time roughly O(n!), because you have to try all comboniation for these n numbers
+		//define k to be max repeated times among all digits
+		//worst case, you have n*n*n*(n-1)*(n-1)*(n-1)*(n-2)*(n-2)*(n-2)...
+	    // Time is O(n!)^k
     vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
         sort(candidates.begin(), candidates.end());
         vector<vector<int>> result;
